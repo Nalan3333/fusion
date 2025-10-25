@@ -53,19 +53,19 @@ import java.io.File;
 import java.util.logging.Handler;
 
 /**
- * Mappet mod
+ * Fusion mod
  * <p>
  * Adventure map toolset mod
  */
 @Mod(
     modid = Mappet.MOD_ID,
-    name = "Mappet",
+    name = "Mappet/Fusion",
     version = Mappet.VERSION,
     dependencies =
         "required-after:mclib@[@MCLIB@,);"+
         "required-after:metamorph@[@METAMORPH@,);"+
-        "after:blockbuster@[@BLOCKBUSTER@,);"+
-        "after:aperture@[@APERTURE@,);",
+        "required-after:blockbuster@[@BLOCKBUSTER@,);"+
+        "required:aperture@[@APERTURE@,);",
     updateJSON = "https://raw.githubusercontent.com/mchorse/mappet/master/version.json"
 )
 

@@ -1,3 +1,7 @@
+## Version 1.0
+This update was made by Nalan3333.
+Nothing new has been added yet...
+**Compatible** with McLib 2.4.2, Aperture 1.8.1, Blockbuster 2.6.1 and Metamorph 1.3.1.
 ## Version 0.9
 
 This update is brought to you by TorayLife.
