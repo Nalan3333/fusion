@@ -10,13 +10,17 @@ import mchorse.mappet.api.quests.QuestManager;
 import mchorse.mappet.api.quests.chains.QuestChainManager;
 import mchorse.mappet.api.schematics.SchematicManager;
 import mchorse.mappet.api.scripts.ScriptManager;
+import mchorse.mappet.api.triggers.blocks.ScriptTriggerBlock;
 import mchorse.mappet.blocks.BlockConditionModel;
 import mchorse.mappet.blocks.BlockEmitter;
 import mchorse.mappet.blocks.BlockRegion;
 import mchorse.mappet.blocks.BlockTrigger;
 import mchorse.mappet.client.KeyboardHandler;
 import mchorse.mappet.client.RenderingHandler;
+import mchorse.mappet.common.fs.FItemFSManager;
+import mchorse.mappet.common.fs.FItemFSOptions;
 import mchorse.mappet.entities.EntityNpc;
+import mchorse.mappet.items.CustomItem;
 import mchorse.mappet.items.ItemNpcTool;
 import mchorse.mappet.tile.TileConditionModel;
 import mchorse.mappet.tile.TileEmitter;
@@ -26,10 +30,10 @@ import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
-import net.minecraftforge.client.model.ModelLoaderRegistry;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.network.FMLNetworkEvent;
@@ -58,6 +62,8 @@ public class RegisterHandler
             Mappet.factions = new FactionManager(null);
             Mappet.chains = new QuestChainManager(null);
             Mappet.scripts = new ScriptManager(null);
+            Mappet.itemScripts = new ScriptManager(null);
+            Mappet.FItemFsManager = new FItemFSManager(null);
             Mappet.huds = new HUDManager(null);
         }
 
@@ -94,6 +100,30 @@ public class RegisterHandler
     @SubscribeEvent
     public void onItemsRegister(RegistryEvent.Register<Item> event)
     {
+        Mappet.itemScripts.initiateAllScripts();
+        Mappet.FItemFsManager.initiateFItemsFSOptions();
+
+        for (FItemFSOptions option : Mappet.FItemFsManager.fsOptionsMap.values()) {
+            if (option == null) {
+                System.out.println("[Mappet/Fusion]: FSOptions is null.");
+                break;
+            }
+            CustomItem item = new CustomItem(option);
+            if (option.itemId == null) {
+                System.out.println("[Mappet/Fusion]: ItemID is null in FSOptions.");
+                break;
+            }
+            item.setRegistryName(
+                    new ResourceLocation(Mappet.MOD_ID, option.itemId)
+            );
+
+            item.setUnlocalizedName(
+                    Mappet.MOD_ID + "." + option.itemId
+            );
+
+            event.getRegistry().register(item);
+            System.out.println("Registered FItem: " + option.itemId);
+        }
         event.getRegistry().register(Mappet.npcTool = new ItemNpcTool()
                 .setRegistryName(new ResourceLocation(Mappet.MOD_ID, "npc_tool"))
                 .setUnlocalizedName(Mappet.MOD_ID + ".npc_tool"));

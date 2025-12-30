@@ -22,6 +22,7 @@ import mchorse.mappet.blocks.BlockRegion;
 import mchorse.mappet.blocks.BlockTrigger;
 import mchorse.mappet.client.gui.GuiMappetDashboard;
 import mchorse.mappet.commands.CommandMappet;
+import mchorse.mappet.common.fs.FItemFSManager;
 import mchorse.mappet.utils.ScriptUtils;
 import mchorse.mappet.utils.ValueButtons;
 import mchorse.mappet.utils.ValueSyntaxStyle;
@@ -135,6 +136,11 @@ public final class Mappet
     public static ScriptManager scripts;
 
     public static HUDManager huds;
+
+    /* Fusion Managers */
+    public static ScriptManager itemScripts = new ScriptManager(new File(new File(new File(DimensionManager.getCurrentSaveRootDirectory(), MOD_ID), "scripts"), "items"));
+
+    public static FItemFSManager FItemFsManager = new FItemFSManager(new File(new File(new File(DimensionManager.getCurrentSaveRootDirectory(), MOD_ID), "scripts"), "fs"));
 
     /* Configuration */
     public static ValueBoolean generalDataCaching;
@@ -283,6 +289,9 @@ public final class Mappet
         chains = new QuestChainManager(new File(mappetWorldFolder, "chains"));
         scripts = new ScriptManager(new File(mappetWorldFolder, "scripts"));
         huds = new HUDManager(new File(mappetWorldFolder, "huds"));
+
+        itemScripts = new ScriptManager(new File(new File(mappetWorldFolder, "script"), "items"));
+        FItemFsManager = new FItemFSManager(new File(mappetWorldFolder, "items"));
 
         /* Initiate */
         if (!settings.serverLoad.isEmpty())

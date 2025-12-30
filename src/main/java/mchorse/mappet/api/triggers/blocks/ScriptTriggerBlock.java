@@ -52,6 +52,7 @@ public class ScriptTriggerBlock extends DataTriggerBlock
             try
             {
                 Mappet.scripts.eval(ScriptUtils.sanitize(ScriptUtils.getEngineByExtension("js")), this.code, context);
+
             }
             catch (ScriptException scriptException)
             {
