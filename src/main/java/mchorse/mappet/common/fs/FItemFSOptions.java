@@ -6,11 +6,13 @@ public class FItemFSOptions extends FSOptions {
     public String itemName;
     public String itemId;
     public String scriptId;
+    public String fileName;
 
-    public FItemFSOptions(String itemName, String itemId, String scriptId) {
+    public FItemFSOptions(String itemName, String itemId, String scriptId, String fileName) {
         this.itemName = itemName;
         this.itemId = itemId;
         this.scriptId = scriptId;
+        this.fileName = fileName;
     }
 
     @Override
@@ -19,6 +21,7 @@ public class FItemFSOptions extends FSOptions {
         tag.setString("itemName", itemName);
         tag.setString("itemId", itemId);
         tag.setString("scriptId", scriptId);
+        tag.setString("fileName", fileName);
         return tag;
     }
 
@@ -27,5 +30,6 @@ public class FItemFSOptions extends FSOptions {
         itemName = tagCompound.getString("itemName");
         itemId = tagCompound.getString("itemId");
         scriptId = tagCompound.getString("scriptId");
+        fileName = tagCompound.getString("fileName");
     }
 }

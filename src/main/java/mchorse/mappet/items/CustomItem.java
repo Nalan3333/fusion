@@ -1,47 +1,74 @@
 package mchorse.mappet.items;
 
 import mchorse.mappet.Mappet;
-import mchorse.mappet.api.data.FItemData;
-import mchorse.mappet.api.scripts.code.ScriptWorld;
-import mchorse.mappet.api.scripts.code.items.ScriptItemStack;
-import mchorse.mappet.api.triggers.Trigger;
 import mchorse.mappet.api.utils.DataContext;
-import mchorse.mappet.common.fs.FItemFSManager;
-import mchorse.mappet.common.fs.FItemFSOptions;
+import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumActionResult;
+import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
 import javax.script.ScriptException;
+import java.util.Objects;
 
 public class CustomItem extends Item {
-    public FItemData data;
-
-    public CustomItem(FItemFSOptions options) {
-        super();
-        if (options != null) {
-            this.data = new FItemData(options);
-        }
+    @Override
+    public ItemStack getDefaultInstance() {
+        ItemStack stack = new ItemStack(this);
+        NBTTagCompound compound = new NBTTagCompound();
+        compound.setString("scriptId", Objects.requireNonNull(this.getRegistryName()).getResourcePath() + ".js");
+        stack.setTagCompound(compound);
+        return stack;
     }
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World world, EntityPlayer player, EnumHand hand) {
+        if (world.isRemote) {
+            return ActionResult.newResult(EnumActionResult.PASS, player.getHeldItem(hand));
+        }
         ItemStack stack = player.getHeldItem(hand);
-        CustomItem item = (CustomItem) stack.getItem();
+        NBTTagCompound tag = stack.getTagCompound();
+        if (tag == null) tag = new NBTTagCompound();
+        if (!tag.hasKey("scriptId")) {
+            tag.setString("scriptId", this.getRegistryName().getResourcePath() + ".js");
+        }
+        stack.setTagCompound(tag);
+        String scriptId = tag.getString("scriptId");
 
         try {
-            Mappet.itemScripts.execute(item.data.getId(), "onItemRightClick", new DataContext(player), new ScriptWorld(world), ScriptItemStack.create(stack), hand);
-        } catch (ScriptException e) {
+            Mappet.itemScripts.execute(scriptId, "onItemRightClick", new DataContext(player));
+        } catch (ScriptException | NoSuchMethodException e) {
             Mappet.logger.error(e.getMessage());
-        } catch (NoSuchMethodException e) {
-            Mappet.logger.error("Not find method onItemRightClick");
         }
 
-        return new ActionResult<>(EnumActionResult.SUCCESS, stack);
+        return ActionResult.newResult(EnumActionResult.SUCCESS, player.getHeldItem(hand));
+    }
+
+    @Override
+    public boolean onDroppedByPlayer(ItemStack stack, EntityPlayer player) {
+        if (player.getEntityWorld().isRemote) {
+            return false;
+        }
+        NBTTagCompound tag = stack.getTagCompound();
+        if (tag == null) tag = new NBTTagCompound();
+        if (!tag.hasKey("scriptId")) {
+            tag.setString("scriptId", Objects.requireNonNull(this.getRegistryName()).getResourcePath() + ".js"); // безопасно, toString включает namespace
+        }
+        stack.setTagCompound(tag);
+        String scriptId = tag.getString("scriptId");
+
+        try {
+            Mappet.itemScripts.execute(scriptId, "onDroppedByPlayer", new DataContext(player));
+        } catch (ScriptException | NoSuchMethodException e) {
+            Mappet.logger.error(e.getMessage());
+        }
+
+        return true;
     }
 }

@@ -18,6 +18,8 @@ import mchorse.mappet.tile.TileRegion;
 import mchorse.mappet.tile.TileTrigger;
 import mchorse.mclib.McLib;
 import mchorse.mclib.utils.ReflectionUtils;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.ClientRegistry;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
@@ -57,6 +59,8 @@ public class ClientProxy extends CommonProxy
             consumer.accept(names);
         }
     }
+
+
 
     @Override
     public void preInit(FMLPreInitializationEvent event)

@@ -290,9 +290,6 @@ public final class Mappet
         scripts = new ScriptManager(new File(mappetWorldFolder, "scripts"));
         huds = new HUDManager(new File(mappetWorldFolder, "huds"));
 
-        itemScripts = new ScriptManager(new File(new File(mappetWorldFolder, "script"), "items"));
-        FItemFsManager = new FItemFSManager(new File(mappetWorldFolder, "items"));
-
         /* Initiate */
         if (!settings.serverLoad.isEmpty())
         {

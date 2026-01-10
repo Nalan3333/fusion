@@ -229,6 +229,24 @@ public enum ContentType implements IContentType
             return "SCRIPTS";
         }
     },
+    ITEMS() {
+        @Override
+        public IManager<? extends AbstractData> getManager() { return Mappet.FItemFsManager; }
+
+        @Override
+        @SideOnly(Side.CLIENT)
+        public GuiMappetDashboardPanel get(GuiMappetDashboard dashboard) { return dashboard.items; }
+
+        @Override
+        @SideOnly(Side.CLIENT)
+        public IKey getPickLabel()
+        {
+            return IKey.lang("mappet.gui.overlays.items");
+        }
+
+        @Override
+        public String getName() { return "ITEMS"; }
+    },
     HUDS()
     {
         @Override

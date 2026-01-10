@@ -1,5 +1,8 @@
 package mchorse.mappet;
 
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import jdk.nashorn.internal.parser.JSONParser;
 import mchorse.mappet.api.crafting.CraftingManager;
 import mchorse.mappet.api.dialogues.DialogueManager;
 import mchorse.mappet.api.events.EventManager;
@@ -43,7 +46,13 @@ import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.Calendar;
+import java.util.Objects;
 
 public class RegisterHandler
 {
@@ -101,29 +110,37 @@ public class RegisterHandler
     public void onItemsRegister(RegistryEvent.Register<Item> event)
     {
         Mappet.itemScripts.initiateAllScripts();
-        Mappet.FItemFsManager.initiateFItemsFSOptions();
-
-        for (FItemFSOptions option : Mappet.FItemFsManager.fsOptionsMap.values()) {
-            if (option == null) {
-                System.out.println("[Mappet/Fusion]: FSOptions is null.");
-                break;
+        for (File file : Objects.requireNonNull(Mappet.FItemFsManager.folder.listFiles())) {
+            try {
+                BufferedReader reader = Files.newBufferedReader(file.toPath(), StandardCharsets.UTF_8);
+                JsonObject json = new JsonParser().parse(reader).getAsJsonObject();
+                String itemName  = json.has("itemName")  ? json.get("itemName").getAsString()  : "Magic Wand";
+                String itemId = json.has("itemId") ? json.get("itemId").getAsString() : "magic_wand";
+                String scriptId = json.has("scriptId") ? json.get("scriptId").getAsString() : "magic_wand.js";
+                CustomItem item = new CustomItem();
+                ResourceLocation location = new ResourceLocation(Mappet.MOD_ID, itemId);
+                Mappet.FItemFsManager.fsOptionsMap.put(location, new FItemFSOptions(itemName, itemId, scriptId, file.getName()));
+                item.setRegistryName(location);
+                item.setUnlocalizedName(itemName);
+                Mappet.FItemFsManager.registeredItems.put(location, item);
+                event.getRegistry().register(item);
+            } catch (IOException e) {
+                System.err.println("Error in reader: " + e.getMessage());
             }
-            CustomItem item = new CustomItem(option);
-            if (option.itemId == null) {
-                System.out.println("[Mappet/Fusion]: ItemID is null in FSOptions.");
-                break;
-            }
-            item.setRegistryName(
-                    new ResourceLocation(Mappet.MOD_ID, option.itemId)
-            );
-
-            item.setUnlocalizedName(
-                    Mappet.MOD_ID + "." + option.itemId
-            );
-
-            event.getRegistry().register(item);
-            System.out.println("Registered FItem: " + option.itemId);
         }
+//        for (FItemFSOptions option : Mappet.FItemFsManager.fsOptionsMap.values()) {
+//            CustomItem item = new CustomItem();
+//            item.setRegistryName(
+//                    new ResourceLocation(Mappet.MOD_ID, option.itemId)
+//            );
+//
+//            item.setUnlocalizedName(
+//                    Mappet.MOD_ID + "." + option.itemId
+//            );
+//
+//            event.getRegistry().register(item);
+//            System.out.println("[Mappet/Fusion]: Registered FItem: " + option.itemId);
+//        }
         event.getRegistry().register(Mappet.npcTool = new ItemNpcTool()
                 .setRegistryName(new ResourceLocation(Mappet.MOD_ID, "npc_tool"))
                 .setUnlocalizedName(Mappet.MOD_ID + ".npc_tool"));
@@ -166,7 +183,13 @@ public class RegisterHandler
     public void onModelRegistry(ModelRegistryEvent event)
     {
         ModelLoader.setCustomModelResourceLocation(Mappet.npcTool, 0, getNpcToolTexture());
-
+        for (Item item : Mappet.FItemFsManager.getRegisteredItems()) {
+            if (item instanceof CustomItem) {
+                ResourceLocation rl = item.getRegistryName();
+                assert rl != null;
+                ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(rl, "inventory"));
+            }
+        }
 
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(Mappet.emitterBlock), 0, new ModelResourceLocation(Mappet.MOD_ID + ":emitter", "inventory"));
         ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(Mappet.triggerBlock), 0, new ModelResourceLocation(Mappet.MOD_ID + ":trigger", "inventory"));
