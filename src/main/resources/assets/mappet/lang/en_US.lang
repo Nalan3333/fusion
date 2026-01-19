@@ -221,7 +221,9 @@ mappet.gui.panels.dialogues_run=Open dialogue
 mappet.gui.panels.regions=Regions
 mappet.gui.panels.condition_models=Condition models
 mappet.gui.panels.npcs=NPCs
-mappet.gui.panels.items=Items
+mappet.gui.panels.objects=Fusion objects
+mappet.gui.objects=Fusion objects
+
 mappet.gui.panels.factions=Factions
 mappet.gui.panels.chains=Quest chains
 mappet.gui.panels.scripts=Scripts
@@ -643,6 +645,17 @@ mappet.gui.npcs.respawn.respawn_on_coordinates=Respawn on coordinates
 mappet.gui.npcs.respawn.respawn_save_uuid=Respawn with same UUID
 mappet.gui.npcs.respawn.respawn_delay=Delay
 mappet.gui.npcs.respawn.respawn_trigger=On NPC respawn trigger
+
+mappet.gui.objects.text_type=Object type:
+mappet.gui.objects.open_editor=Open editor
+
+mappet.gui.objects.item_editor.title=Item Editor
+mappet.gui.objects.text_item_count=Max stack size:
+mappet.objects.text_item_name=Item name:
+mappet.gui.objects.text_item_tooltip=Item description:
+
+mappet.gui.objects.block_editor.title=Block Editor
+mappet.objects.block_editor.material_text=Block material:
 
 mappet.gui.factions.title=Faction's title
 mappet.gui.factions.color=Display color

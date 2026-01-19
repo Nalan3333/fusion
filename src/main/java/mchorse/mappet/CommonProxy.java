@@ -24,6 +24,7 @@ import mchorse.mappet.api.events.nodes.EventBaseNode;
 import mchorse.mappet.api.events.nodes.SwitchNode;
 import mchorse.mappet.api.events.nodes.TimerNode;
 import mchorse.mappet.api.events.nodes.TriggerNode;
+import mchorse.mappet.api.fs.ManagerRegisteredObject;
 import mchorse.mappet.api.quests.chains.QuestNode;
 import mchorse.mappet.api.triggers.blocks.AbstractTriggerBlock;
 import mchorse.mappet.api.triggers.blocks.CommandTriggerBlock;
@@ -67,6 +68,7 @@ import mchorse.mappet.utils.MPIcons;
 import mchorse.mappet.utils.MappetNpcSelector;
 import mchorse.mappet.utils.MetamorphHandler;
 import mchorse.mappet.utils.ScriptUtils;
+import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.capabilities.CapabilityManager;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -134,6 +136,8 @@ public class CommonProxy
 
         configFolder = new File(path, Mappet.MOD_ID);
         configFolder.mkdir();
+
+        Mappet.objects = new ManagerRegisteredObject(new File(new File(DimensionManager.getCurrentSaveRootDirectory(), "fusion"), "fs"));
 
         Dispatcher.register();
 

@@ -1,6 +1,5 @@
 package mchorse.mappet.client.gui;
 
-import mchorse.mappet.Mappet;
 import mchorse.mappet.client.RenderingHandler;
 import mchorse.mappet.client.gui.panels.*;
 import mchorse.mappet.network.Dispatcher;
@@ -10,14 +9,12 @@ import mchorse.mclib.client.gui.framework.GuiBase;
 import mchorse.mclib.client.gui.framework.elements.GuiElement;
 import mchorse.mclib.client.gui.mclib.GuiAbstractDashboard;
 import mchorse.mclib.client.gui.mclib.GuiDashboardPanels;
-import mchorse.mclib.client.gui.utils.Icon;
 import mchorse.mclib.client.gui.utils.Icons;
 import mchorse.mclib.client.gui.utils.keys.IKey;
 import mchorse.metamorph.api.morphs.AbstractMorph;
 import mchorse.metamorph.client.gui.creative.GuiCreativeMorphsMenu;
 import mchorse.metamorph.util.MMIcons;
 import net.minecraft.client.Minecraft;
-import net.minecraft.util.ResourceLocation;
 
 import java.util.function.Consumer;
 
@@ -38,9 +35,8 @@ public class GuiMappetDashboard extends GuiAbstractDashboard
     public GuiScriptPanel script;
     public GuiHUDScenePanel hud;
     public GuiLogPanel logs;
-    public GuiItemsPanel items;
-
     public GuiCreativeMorphsMenu morphs;
+    public GuiObjectsPanel objects;
 
     public static GuiMappetDashboard get(Minecraft mc)
     {
@@ -104,10 +100,10 @@ public class GuiMappetDashboard extends GuiAbstractDashboard
         this.region = new GuiRegionPanel(mc, this);
         this.conditionModel = new GuiConditionModelPanel(mc, this);
         this.npc = new GuiNpcPanel(mc, this);
-        this.items = new GuiItemsPanel(mc, this);
         this.faction = new GuiFactionPanel(mc, this);
         this.chain = new GuiQuestChainPanel(mc, this);
         this.script = new GuiScriptPanel(mc, this);
+        this.objects = new GuiObjectsPanel(mc, this);
         this.hud = new GuiHUDScenePanel(mc, this);
         this.logs = new GuiLogPanel(mc, this);
 
@@ -119,7 +115,7 @@ public class GuiMappetDashboard extends GuiAbstractDashboard
         this.panels.registerPanel(this.region, IKey.lang("mappet.gui.panels.regions"), Icons.FULLSCREEN);
         this.panels.registerPanel(this.conditionModel, IKey.lang("mappet.gui.panels.condition_models"), Icons.BLOCK);
         this.panels.registerPanel(this.npc, IKey.lang("mappet.gui.panels.npcs"), Icons.PROCESSOR);
-        this.panels.registerPanel(this.items, IKey.lang("mappet.gui.panels.items"), new Icon(new ResourceLocation(Mappet.MOD_ID, "textures/gui/items_icon.png"), 16, 0));
+        this.panels.registerPanel(this.objects, IKey.lang("mappet.gui.objects"), MPIcons.STAR);
         this.panels.registerPanel(this.faction, IKey.lang("mappet.gui.panels.factions"), Icons.BOOKMARK);
         this.panels.registerPanel(this.chain, IKey.lang("mappet.gui.panels.chains"), Icons.FOLDER);
         this.panels.registerPanel(this.script, IKey.lang("mappet.gui.panels.scripts"), MMIcons.PROPERTIES);

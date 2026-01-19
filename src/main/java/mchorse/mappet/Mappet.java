@@ -6,6 +6,7 @@ import mchorse.mappet.api.dialogues.DialogueManager;
 import mchorse.mappet.api.events.EventManager;
 import mchorse.mappet.api.expressions.ExpressionManager;
 import mchorse.mappet.api.factions.FactionManager;
+import mchorse.mappet.api.fs.ManagerRegisteredObject;
 import mchorse.mappet.api.huds.HUDManager;
 import mchorse.mappet.api.misc.ServerSettings;
 import mchorse.mappet.api.npcs.NpcManager;
@@ -22,7 +23,6 @@ import mchorse.mappet.blocks.BlockRegion;
 import mchorse.mappet.blocks.BlockTrigger;
 import mchorse.mappet.client.gui.GuiMappetDashboard;
 import mchorse.mappet.commands.CommandMappet;
-import mchorse.mappet.common.fs.FItemFSManager;
 import mchorse.mappet.utils.ScriptUtils;
 import mchorse.mappet.utils.ValueButtons;
 import mchorse.mappet.utils.ValueSyntaxStyle;
@@ -51,6 +51,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.io.File;
+import java.nio.file.Paths;
 import java.util.logging.Handler;
 
 /**
@@ -138,9 +139,7 @@ public final class Mappet
     public static HUDManager huds;
 
     /* Fusion Managers */
-    public static ScriptManager itemScripts = new ScriptManager(new File(new File(new File(DimensionManager.getCurrentSaveRootDirectory(), MOD_ID), "scripts"), "items"));
-
-    public static FItemFSManager FItemFsManager = new FItemFSManager(new File(new File(new File(DimensionManager.getCurrentSaveRootDirectory(), MOD_ID), "scripts"), "fs"));
+    public static ManagerRegisteredObject objects;
 
     /* Configuration */
     public static ValueBoolean generalDataCaching;

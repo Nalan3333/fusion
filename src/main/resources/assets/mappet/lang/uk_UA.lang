@@ -203,7 +203,8 @@ mappet.gui.panels.dialogues=Діалоги
 mappet.gui.panels.dialogues_run=Відкрити діалог
 mappet.gui.panels.regions=Регіони
 mappet.gui.panels.npcs=NPC
-mappet.gui.panels.items=Предмети
+mappet.gui.panels.objects=Об'єкти Fusion
+mappet.gui.objects=Об'єкти Fusion
 mappet.gui.panels.factions=Фракції
 mappet.gui.panels.chains=Ланцюги квестів
 mappet.gui.panels.scripts=Скрипти
@@ -488,6 +489,17 @@ mappet.gui.npcs.context.paste=Вставити стан...
 mappet.gui.npcs.context.rename=Переназвіть стан...
 mappet.gui.npcs.context.remove=Видалити стан
 mappet.gui.npcs.info.empty=Щоб почати редагування, створіть або оберіть NPC зі списку справа...
+
+mappet.gui.objects.text_type=Тип об'єкту:
+mappet.gui.objects.open_editor=Відкрити редактор
+
+mappet.gui.objects.item_editor.title=Редактор предмета
+mappet.gui.objects.text_item_count=Максимальний розмір стака:
+mappet.objects.text_item_name=Ім'я предмета:
+mappet.gui.objects.text_item_tooltip=Опис предмета:
+
+mappet.gui.objects.block_editor.title=Редактор блоку
+mappet.objects.block_editor.material_text=Матеріал блоку:
 
 mappet.gui.factions.title=Назва фракції
 mappet.gui.factions.color=Показуваний колір

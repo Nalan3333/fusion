@@ -12,11 +12,15 @@ public class MPIcons
     public static final Icon REPL = new Icon(TEXTURE, 0, 0);
     public static final Icon IN = new Icon(TEXTURE, 16, 0);
     public static final Icon OUT = new Icon(TEXTURE, 32, 0);
+    public static final Icon STAR = new Icon(TEXTURE, 48, 0);
+    public static final Icon SMIIILE = new Icon(TEXTURE, 64, 0);
 
     public static void register()
     {
         IconRegistry.register("repl", REPL);
         IconRegistry.register("in", IN);
         IconRegistry.register("out", OUT);
+        IconRegistry.register("star", STAR);
+        IconRegistry.register("smiiile", SMIIILE);
     }
 }

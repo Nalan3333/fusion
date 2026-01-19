@@ -272,6 +272,10 @@ public class ScriptManager extends BaseManager<Script>
             {
                 this.globalLibraries.put(id, script);
             }
+
+
+
+
         }
 
         return result;

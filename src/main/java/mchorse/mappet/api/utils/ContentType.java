@@ -148,6 +148,27 @@ public enum ContentType implements IContentType
             return "NPC";
         }
     },
+    OBJECTS() {
+        @Override
+        public IManager<? extends AbstractData> getManager() {
+            return Mappet.objects;
+        }
+
+        @Override
+        public GuiMappetDashboardPanel get(GuiMappetDashboard dashboard) {
+            return dashboard.objects;
+        }
+
+        @Override
+        public IKey getPickLabel() {
+            return IKey.lang("mappet.gui.overlays.objects");
+        }
+
+        @Override
+        public String getName() {
+            return "OBJECTS";
+        }
+    },
     FACTION()
     {
         @Override
@@ -228,24 +249,6 @@ public enum ContentType implements IContentType
         public String getName() {
             return "SCRIPTS";
         }
-    },
-    ITEMS() {
-        @Override
-        public IManager<? extends AbstractData> getManager() { return Mappet.FItemFsManager; }
-
-        @Override
-        @SideOnly(Side.CLIENT)
-        public GuiMappetDashboardPanel get(GuiMappetDashboard dashboard) { return dashboard.items; }
-
-        @Override
-        @SideOnly(Side.CLIENT)
-        public IKey getPickLabel()
-        {
-            return IKey.lang("mappet.gui.overlays.items");
-        }
-
-        @Override
-        public String getName() { return "ITEMS"; }
     },
     HUDS()
     {

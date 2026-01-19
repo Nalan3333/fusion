@@ -1,6 +1,6 @@
 [
     {
-        "modid": "fusion",
+        "modid": "mappet",
         "name": "Fusion",
         "description": "Adventure map toolset mod.\n ATTENTION: Fusion is a fork Mappet mod.\n The original mod can be seen here: https://github.com/mchorse/mappet",
         "version": "${version}",
