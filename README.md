@@ -1,7 +1,7 @@
 **Fusion** is a Minecraft mod (for **1.12.2** exclusively) that is designed as a tool set for far superior adventure maps than possible with vanilla. It's also possible to use Fusion for scripted roleplays, and, to some extent, in Minecraft machinimas.
 **Fusion is a fork for [Mappet](https://github.com/mchorse/mappet)**.
 Original Mappet is licensed under the MIT License (see LICENSE_MAPPET.md).
-Fusion is distributed under the GNU General Public License v3.0 (see LICANSE_FUSION.txt).
+Fusion is distributed under the GNU General Public License v3.0 (see LICENSE_FUSION.txt).
 
 Unless otherwise stated, all source files in this repository are covered by the terms of the GPL v3.
 
